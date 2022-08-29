@@ -1,0 +1,232 @@
+.signUp {
+    display: flex;
+    height: 745px;
+
+    .signUpContainer {
+        animation-name: fadeInLeft;
+        animation-duration: 1s;
+        transition: .5s all;
+        animation-fill-mode: both;
+        -webkit-font-smoothing: antialiased;
+        width: 40%;
+        margin: auto;
+        padding: 60px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+
+        .signUpTitle {
+            h3 {
+                font-style: normal;
+                font-weight: 700;
+                font-size: 26px;
+                line-height: 34px;
+                margin: 0 auto 10px;
+                text-align: center;
+                text-transform: uppercase;
+                background: linear-gradient(95.18deg, #EB67CB 43.94%, #6285F0 91.72%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                width: max-content;
+            }
+
+            p {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 13px;
+
+                a {
+                    cursor: pointer;
+                    color: #a3528e;
+                    margin-left: 8px;
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .signUpForm {
+            .signUpPw {
+                position: relative;
+
+                .pwEye {
+                    cursor: pointer;
+                    position: absolute;
+                    width: 13px;
+                    height: 13px;
+                    right: 18px;
+                    top: 13px;
+                    color: rgb(147, 138, 138);
+                }
+
+                .pwEye.active {
+                    color: #000;
+                }
+            }
+
+            .signUpUser {
+                position: relative;
+
+                .validatUser {
+                    display: none;
+
+                    .validateContainer {
+                        display: flex;
+                        position: absolute;
+                        align-items: center;
+                        justify-content: space-between;
+                        width: 98%;
+                        height: 30px;
+                        padding: 0 10px;
+                        margin: 0 5px;
+                        top: 5px;
+                        background-color: #e50000;
+                        color: #fff;
+                    }
+
+                    p {
+                        font-size: 12px;
+                    }
+
+                    .validateCancle {
+                        font-size: 12px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+
+
+            input {
+                background: #fff;
+                border: 1px solid #d8d8dd;
+                border-radius: 0;
+                height: 40px;
+                padding: 0 20px;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 14px;
+                line-height: 22px;
+                color: #000;
+                outline: none !important;
+                width: 100%;
+                display: flex;
+                margin: 20px 0;
+                color: rgb(136, 117, 117);
+
+                &:hover {
+                    box-shadow: 0 0 20px rgba(11, 28, 52, 0.2);
+                    -webkit-transition: all .2s ease-in;
+                    -moz-transition: all .2s ease-in;
+                    -ms-transition: all .2s ease-in;
+                    -o-transition: all .2s ease-in;
+                    transition: all .2s ease-in;
+                    border-color: transparent;
+                }
+            }
+
+
+            .signUpBottom {
+                margin-top: 40px;
+
+                .signUpLogin {
+                    height: 40px;
+                    background: #e50000;
+                    border: 1px solid #e50000;
+                    border-radius: 0;
+                    font-weight: 700;
+                    font-size: 13px;
+                    line-height: 22px;
+                    color: #fff;
+                    padding: 0 20px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    outline: none;
+                    box-shadow: none;
+                    width: 100%;
+                    text-transform: uppercase;
+                    margin: 15px 0 0;
+                    transition: .5s all;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: #fff;
+                        border: 1px solid red;
+                        color: red;
+                        transition: .5s all;
+                    }
+                }
+
+                h5 {
+                    padding: 20px 0;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                    text-align: center;
+                    background: -o-linear-gradient(354.82deg, #EB67CB 43.94%, #6285F0 91.72%);
+                    background: linear-gradient(95.18deg, #EB67CB 43.94%, #6285F0 91.72%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    width: max-content;
+                    margin: 0 auto;
+                }
+
+                .signUpDif {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .signUpFb {
+                        display: flex;
+                        align-items: center;
+                        background: #3a559f;
+                        border: 1px solid #3a559f;
+                        color: #fff;
+                        border-radius: 5px;
+                        height: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 48%;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: normal;
+                        cursor: pointer;
+
+                        svg {
+                            width: 18px;
+                            height: 18px;
+                            margin-right: 10px;
+                            background-color: #fff
+                        }
+                    }
+
+                    .signUpGg {
+                        display: flex;
+                        align-items: center;
+                        background: #fff;
+                        border: 1px solid #ccc;
+                        color: #000;
+                        border-radius: 5px;
+                        height: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 48%;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: normal;
+                        cursor: pointer;
+
+                        svg {
+                            width: 18px;
+                            height: 18px;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
