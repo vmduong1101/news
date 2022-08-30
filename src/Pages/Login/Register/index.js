@@ -35,7 +35,7 @@ const Register = (props) => {
                 .oneOf([Yup.ref("password")], "Nhập lại mật khẩu không đúng")
         }),
         onSubmit: (values, { resetForm }) => {
-            localStorage.setItem('user', JSON.stringify(values))
+            localStorage.setItem('userLocal', JSON.stringify(values))
             toast.success("Đăng ký tài khoản thành công!", {
                 position: "bottom-right",
                 autoClose: 2000,
@@ -50,6 +50,7 @@ const Register = (props) => {
             return setTimeout(() => setChange(false), 2000)
         }
     });
+
     const handleSignUp = () => {
         setChange(false)
     }
