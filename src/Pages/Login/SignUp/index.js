@@ -43,11 +43,11 @@ const SignUp = (props) => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-
     const handleSubmit = (e) => {
         e.preventDefault()
         const user = JSON.parse(localStorage.getItem('userLocal')) || []
-        if (user.email === username && user.password === password) {
+
+        if (user.email == username && user.password == password) {
             toast.success("Đăng nhập thành công!", {
                 position: "bottom-right",
                 autoClose: 2000,
