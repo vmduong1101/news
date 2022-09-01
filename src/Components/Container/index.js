@@ -3,7 +3,7 @@ import productApi from "../Api/productApi";
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import './style.scss'
 import { fetchProduct } from "../../Pages/Home/homeSlice";
-import getProductApi from "../Api/productApi";
+import { getProductApi } from "../Api/productApi";
 
 const Container = () => {
     const [productList, setProductList] = useState([])
@@ -18,10 +18,12 @@ const Container = () => {
             }
         }
         fetchProductList()
+        // fetchProduct()
     }, [])
     var formatter = new Intl.NumberFormat('vi-VN',
         { style: 'currency', currency: 'VND' }
     );
+
     return (
         <div className='w-screen my-5'>
             <div className='grid grid-cols-5 gap-5 px-36 text-center'>

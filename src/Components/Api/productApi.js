@@ -1,9 +1,26 @@
 import axiosClient from "./axiosClient";
 
-const getProductApi = {
-    getAllProduct: (params) => {
+export const getProductApi = {
+    getAllProduct: () => {
         const url = '/product';
-        return axiosClient.get(url, { params });
+        return axiosClient.get(url);
     }
 }
-export default getProductApi;
+
+export const addProductApi = {
+    addProduct: (params) => {
+        const data = { ...params }
+        const url = '/product';
+        return axiosClient.postForm(url,
+            data
+        )
+    }
+}
+
+export const deleteProductApi = {
+    deleteProduct: (id) => {
+        const url = `/product/${id}`;
+        return axiosClient.delete(url);
+    }
+}
+

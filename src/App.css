@@ -4,3 +4,7 @@
     font-family: 'Open sans', sans-serif;
     box-sizing: border-box;
 }
+
+.ant-table table {
+    text-align: center !important;
+}

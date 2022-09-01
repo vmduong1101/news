@@ -1,11 +1,32 @@
 import { Space, Table, Button, Modal, Input, Form, Select } from 'antd';
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
+import { deleteProductThunk, fetchProductThunk, addProductThunk } from '../../Pages/Home/homeSlice';
+import { unwrapResult } from '@reduxjs/toolkit'
+import axios from 'axios';
 
 const { Option } = Select;
 
 
 const AdminProduct = () => {
+    const dispatch = useDispatch()
+    const [productList, setProductList] = useState([])
+    const [formValue, setFormValue] = useState([])
+    const [id, setID] = useState('')
+
+    const fetchProductList = async () => {
+        try {
+            const actionResult = await dispatch(fetchProductThunk())
+            const listProduct = unwrapResult(actionResult)
+            setProductList(listProduct)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        fetchProductList()
+    }, [])
     const [formModal] = Form.useForm();
     const columns = [
         {
@@ -13,92 +34,94 @@ const AdminProduct = () => {
             dataIndex: 'id',
             key: 'id',
             render: (text) => <a>{text}</a>,
+            align: 'center',
         },
         {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
             render: (text) => <a>{text}</a>,
+            align: 'center',
         },
         {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
+            align: 'center',
         },
         {
-            title: 'Image',
-            dataIndex: 'img',
-            key: 'img',
+            title: 'Brand',
+            dataIndex: 'category',
+            key: 'category',
+            align: 'center',
         },
         {
             title: 'CPU',
-            dataIndex: 'cpu',
+            dataIndex: ['des', 'cpu'],
+            // render: (des) => des.map((item) => item.cpu).join(),
             key: 'cpu',
+            align: 'center',
         },
         {
             title: 'RAM',
-            dataIndex: 'ram',
+            dataIndex: ['des', 'ram'],
             key: 'ram',
+            align: 'center',
         },
         {
             title: 'ROM',
-            dataIndex: 'rom',
+            dataIndex: ['des', 'rom'],
             key: 'rom',
+            align: 'center',
         },
         {
             title: 'Camera trước',
-            dataIndex: 'frontCamera',
+            dataIndex: ['des', 'frontCamera'],
             key: 'frontCamera',
+            align: 'center',
         },
         {
             title: 'Camera sau',
-            dataIndex: 'rearCamera',
+            dataIndex: ['des', 'rearCamera'],
             key: 'rearCamera',
+            align: 'center',
         },
         {
             title: 'PIN',
-            dataIndex: 'pin',
+            dataIndex: ['des', 'pin'],
             key: 'pin',
+            align: 'center',
         },
         {
             title: 'Sạc',
-            dataIndex: 'pluggin',
+            dataIndex: ['des', 'pluggin'],
             key: 'pluggin',
+            align: 'center',
         },
         {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
-                <Space size="middle">
+                < Space size="middle">
                     <a>Sửa</a>
-                    <a>Xóa</a>
-                </Space>
+                    <a onClick={() => handleDelete(record)}>Xóa</a>
+                </Space >
             ),
+            align: 'center',
         },
     ];
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
+    const handleDelete = (record) => {
+        const id = record.id
+        const fetchDeleteProduct = async () => {
+            try {
+                const actionResult = await dispatch(deleteProductThunk(id))
+                fetchProductList()
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchDeleteProduct()
+    }
     //Modal Ant
     const [isModalVisible, setIsModalVisible] = useState(false);
     const showModal = () => {
@@ -106,9 +129,52 @@ const AdminProduct = () => {
     };
 
     const handleOk = () => {
-        formModal.resetFields();
+
+        const fetchAddProduct = async () => {
+            try {
+                const actionAddResult = await dispatch(addProductThunk(formValue))
+                const addListProduct = unwrapResult(actionAddResult)
+
+                fetchProductList()
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchAddProduct()
+        // const data = {
+        //     id: '1',
+        //     name: '',
+        //     price: 0,
+        //     category: '',
+        //     img: '',
+        //     des: {
+        //         cpu: '',
+        //         ram: '',
+        //         rom: '',
+        //         rearCamera: '',
+        //         frontCamera: '',
+        //         pin: '',
+        //         pluggin: '',
+        //     }
+        // }
+        // console.log(data)
+        // console.log(formValue)
+        // axios({
+        //     method: "POST",
+        //     url: "https://630f636737925634188e6484.mockapi.io/product",
+        //     data
+        // })
+        //     .then(res => {
+        //         console.log("res", res.data.message);
+        //         fetchProductList()
+        //     })
+        //     .catch(err => {
+        //         console.log("error in request", err);
+        //     });
+
         setIsModalVisible(false);
-    };
+
+    }
 
     const handleCancel = () => {
         setIsModalVisible(false);
@@ -117,13 +183,49 @@ const AdminProduct = () => {
     //Form Ant
     const onFinish = (values) => {
         console.log('Success:', values);
-        formModal.resetFields();
 
-    };
+    }
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+    // var formdata = new FormData();
+    // formdata.append("id", formValue.id)
+    // formdata.append("name", formValue.name)
+    // formdata.append("price", formValue.price)
+    // formdata.append("img", formValue.img)
+    // formdata.append("category", formValue.category)
+    // formdata.append("des", {
+    //     "cpu": formValue.des.cpu,
+    //     "ram": formValue.des.ram,
+    //     "rom": formValue.des.rom,
+    //     "rearCamera": formValue.des.rearCamera,
+    //     "frontCamera": formValue.des.frontCamera,
+    //     "pin": formValue.des.pin,
+    //     "pluggin": formValue.des.pluggin,
+    // })
+    const onValuesChange = (change, values) => {
+        const data = {
+            id: values.id,
+            name: values.name,
+            price: values.price,
+            img: values.img,
+            category: values.brand,
+            des: {
+                cpu: values.cpu,
+                ram: values.ram,
+                rom: values.rom,
+                rearCamera: values.rearCamera,
+                frontCamera: values.frontCamera,
+                pin: values.pin,
+                pluggin: values.pluggin,
+            }
+
+        }
+
+        setFormValue(data)
+    }
+
     //Select Ant
     const onChange = (value) => {
         console.log(`selected ${value}`);
@@ -134,7 +236,7 @@ const AdminProduct = () => {
     };
     return (
         <div>
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={productList} rowKey='id' />
             <div>
                 <Button type="primary" onClick={showModal}>
                     Add Product
@@ -154,6 +256,7 @@ const AdminProduct = () => {
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
+                        onValuesChange={onValuesChange}
                     >
                         <Form.Item
                             label="ID"
@@ -218,6 +321,18 @@ const AdminProduct = () => {
                                 <Option value="acer">Acer</Option>
                                 <Option value="asus">Asus</Option>
                             </Select>
+                        </Form.Item>
+                        <Form.Item
+                            label="Hình ảnh"
+                            name="img"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng nhập hình ảnh sản phẩm',
+                                },
+                            ]}
+                        >
+                            <Input placeholder='Ảnh' />
                         </Form.Item>
                         <Form.Item
                             label="CPU"
