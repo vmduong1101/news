@@ -8,3 +8,7 @@
 .ant-table table {
     text-align: center !important;
 }
+
+.App::-webkit-scrollbar {
+    display: none;
+}

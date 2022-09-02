@@ -17,6 +17,21 @@ export const addProductApi = {
     }
 }
 
+export const getItemProductApi = {
+    getItemProduct: (id) => {
+        const url = `/product/${id}`;
+        return axiosClient.get(url);
+    }
+}
+
+export const editProductApi = {
+    editProduct: (params) => {
+        const data = { ...params.formValue }
+        const url = `/product/${params.idSelect}`;
+        return axiosClient.putForm(url, data);
+    }
+}
+
 export const deleteProductApi = {
     deleteProduct: (id) => {
         const url = `/product/${id}`;

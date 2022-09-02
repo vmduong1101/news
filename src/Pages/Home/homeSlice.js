@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useReducer } from "react";
-import { addProductApi, deleteProductApi, getProductApi } from "../../Components/Api/productApi";
+import { addProductApi, deleteProductApi, editProductApi, getItemProductApi, getProductApi } from "../../Components/Api/productApi";
 
 
 
@@ -15,6 +15,23 @@ export const addProductThunk = createAsyncThunk(
     'product/fetchAddProduct', async (payload) => {
         const response = await addProductApi.addProduct(payload)
         console.log('payload', payload)
+        return response
+    }
+)
+
+export const getItemProductThunk = createAsyncThunk(
+    'product/fetchGetItemProduct', async (id) => {
+        const response = await getItemProductApi.getItemProduct(id)
+
+        console.log('res', response)
+        return response
+    }
+)
+
+export const editProductThunk = createAsyncThunk(
+    'product/fetchEditProduct', async (payload) => {
+        const response = await editProductApi.editProduct(payload)
+        console.log('payload', payload)
         console.log('res', response)
         return response
     }
@@ -28,22 +45,6 @@ export const deleteProductThunk = createAsyncThunk(
 )
 const productSlice = createSlice({
     name: 'products',
-    // initialState: [{
-    //     id: '1',
-    //     name: '',
-    //     price: 0,
-    //     category: '',
-    //     img: '',
-    //     des: {
-    //         cpu: '',
-    //         ram: '',
-    //         rom: '',
-    //         rearCamera: '',
-    //         frontCamera: '',
-    //         pin: '',
-    //         pluggin: '',
-    //     }
-    // }],
     initialState: {
         data: [],
         loading: false,
@@ -73,6 +74,31 @@ const productSlice = createSlice({
             console.log(action)
         },
         [addProductThunk.rejected]: state => {
+            state.loading = false;
+            state.error = ''
+        },
+        //Get Item
+        [getItemProductThunk.pending]: state => {
+            state.loading = true;
+        },
+        [getItemProductThunk.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.data = action.payload
+        },
+        [getItemProductThunk.rejected]: state => {
+            state.loading = false;
+            state.error = ''
+        },
+        //Edit
+        [editProductThunk.pending]: state => {
+            state.loading = true;
+        },
+        [editProductThunk.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.data = action.payload
+            console.log('action edit', action)
+        },
+        [editProductThunk.rejected]: state => {
             state.loading = false;
             state.error = ''
         },

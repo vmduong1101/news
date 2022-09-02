@@ -30,7 +30,7 @@ const Header = () => {
         });
     }
     return (
-        <div className='flex bg-sky-400 h-20 justify-between items-center px-24'>
+        <div className='flex bg-sky-400 h-20 justify-between items-center px-24 max-w-full'>
             <img className='w-28 h-14' src='https://xgear.net/wp-content/uploads/2022/05/Xgear-logo.png' />
             <div className='flex items-center relative'>
                 <input className='rounded-lg p-1 px-6 w-96 outline-none text-sm h-9 text-stone-600' placeholder='Bạn cần tìm sản phẩm nào ?' />

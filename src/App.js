@@ -7,7 +7,7 @@ import Admin from './Pages/Admin';
 function App() {
 
   return (
-    <div className="App h-screen">
+    <div className="App">
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<Home />} />
