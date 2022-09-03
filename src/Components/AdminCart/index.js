@@ -138,15 +138,6 @@ const AdminProduct = () => {
                         frontCamera: getItemProduct.des.frontCamera,
                         pin: getItemProduct.des.pin,
                         pluggin: getItemProduct.des.pluggin,
-                        //
-                        primaryInfor: getItemProduct.infor.primaryInfor,
-                        designProduct: getItemProduct.infor.designProduct,
-                        designProductImg: getItemProduct.infor.designProductImg,
-                        performaceProduct: getItemProduct.infor.performaceProduct,
-                        performaceProductImg: getItemProduct.infor.performaceProductImg,
-                        highCamera: getItemProduct.infor.highCamera,
-                        highCameraImg: getItemProduct.infor.highCameraImg,
-
 
                     }
                     formModal.setFieldsValue(data)
@@ -245,15 +236,6 @@ const AdminProduct = () => {
                 frontCamera: values.frontCamera,
                 pin: values.pin,
                 pluggin: values.pluggin,
-            },
-            infor: {
-                primaryInfor: values.primaryInfor,
-                designProduct: values.designProduct,
-                designProductImg: values.designProductImg,
-                performaceProduct: values.performaceProduct,
-                performaceProductImg: values.performaceProductImg,
-                highCamera: values.highCamera,
-                highCameraImg: values.highCameraImg,
             }
 
         }
@@ -455,90 +437,6 @@ const AdminProduct = () => {
                                 ]}
                             >
                                 <Input placeholder='Pluggin' />
-                            </Form.Item>
-                            <Form.Item
-                                label="Thông tin sản phẩm"
-                                name="primaryInfor"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng nhập thông tin sản phẩm',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder='Thông tin sản phẩm' />
-                            </Form.Item>
-                            <Form.Item
-                                label="Thiết kế sản phẩm"
-                                name="designProduct"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng nhập thiết kế sản phẩm',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder='Thiết kế sản phẩm' />
-                            </Form.Item>
-                            <Form.Item
-                                label="Hình ảnh TKSP"
-                                name="designProductImg"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng nhập link hình ảnh',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder='Hình ảnh thiết kế sản phẩm' />
-                            </Form.Item>
-                            <Form.Item
-                                label="Hiệu năng"
-                                name="performaceProduct"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng nhập hiệu năng sản phẩm',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder='Hiệu năng sản phẩm' />
-                            </Form.Item>
-                            <Form.Item
-                                label="Hình ảnh HNSP"
-                                name="performaceProductImg"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng nhập link hình ảnh',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder='Hình ảnh hiệu năng sản phẩm' />
-                            </Form.Item>
-                            <Form.Item
-                                label="Camera vượt trội"
-                                name="highCamera"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng nhập thông tin camera',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder='Thông tin về camera' />
-                            </Form.Item>
-                            <Form.Item
-                                label="Hình ảnh camera vượt trội"
-                                name="highCameraImg"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Nhập link hình ảnh camera',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder='Hình ảnh camera vượt trội' />
                             </Form.Item>
                         </Form>
                     </Modal>

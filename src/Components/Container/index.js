@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux/es/exports';
 import './style.scss'
 import { fetchProductThunk } from "../../Pages/Home/homeSlice";
-import { Spin } from "antd";
+import { Button, Spin } from "antd";
 import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit'
+import { addCartThunk, getcartThunk } from "../../Pages/Cart/cartSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Container = () => {
@@ -12,6 +15,17 @@ const Container = () => {
     const stateListProduct = useSelector(state => state.products.loading)
     const changeValue = useSelector(state => state.changeValue.changeCategory)
     const [productList, setProductList] = useState([])
+    const [listCart, setListCart] = useState([])
+    const stateGetCart = useSelector(state => state.cart.data)
+    const fetchCart = async () => {
+        try {
+            const actionFetchCart = await dispatch(getcartThunk())
+            const listCartAction = unwrapResult(actionFetchCart)
+            setListCart(listCartAction)
+        } catch (err) {
+            console.log(err)
+        }
+    }
     useEffect(() => {
         const fetchProductList = async () => {
             try {
@@ -23,20 +37,59 @@ const Container = () => {
             }
         }
         fetchProductList()
+        fetchCart()
     }, [])
     var formatter = new Intl.NumberFormat('vi-VN',
         { style: 'currency', currency: 'VND' }
     );
-    console.log(changeValue)
-    const arr = productList.filter(item => item.category === changeValue)
-    console.log(arr)
+
+    const handleAddCart = (id) => {
+        fetchCart()
+        const exist = productList.find((item) => item.id == id)
+        const listExist = stateGetCart.find((item) => item.id == exist.id)
+        if (listExist) {
+            return toast.warning("Sản phẩm đã có trong giỏ hàng", {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: 'light'
+            })
+        }
+
+        const fetchAddCart = async () => {
+            try {
+                const actionAddCart = await dispatch(addCartThunk({ ...exist, quantity: 1, total: 0 }))
+                const addListCart = unwrapResult(actionAddCart)
+                fetchCart()
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchAddCart()
+        toast.success("Đã thêm sản phẩm vào giỏ hàng", {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: 'light'
+        })
+        return
+
+    }
     return (
         <Spin spinning={stateListProduct} tip="Loading...">
             <div className='my-5 max-w-full'>
                 <div className='grid grid-cols-5 gap-5 px-36 text-center'>
                     {productList && changeValue ?
                         productList.filter(item => item.category == changeValue).map(item => (
-
                             <div className='my-6 border p-5 cursor-pointer hover:border-none customShadow' key={item.id}>
                                 <img className="imgProduct" src={item.img} />
                                 <div className='text-left my-6'>
@@ -50,6 +103,7 @@ const Container = () => {
                                         <li>Pin {item.des.pin}, Sạc {item.des.pluggin}</li>
                                     </ul>
                                 </div>
+                                <Button type="primary" onClick={() => handleAddCart(item.id)}>Mua hàng</Button>
                             </div>
                         )) : productList.map((item) => (
                             <div className='my-6 border p-5 cursor-pointer hover:border-none customShadow' key={item.id}>
@@ -65,11 +119,13 @@ const Container = () => {
                                         <li>Pin {item.des.pin}, Sạc {item.des.pluggin}</li>
                                     </ul>
                                 </div>
+                                <Button type="primary" onClick={() => handleAddCart(item.id)}>Mua hàng</Button>
                             </div>
                         ))
                     }
                 </div>
             </div>
+            <ToastContainer />
         </Spin>
     )
 }

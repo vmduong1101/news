@@ -12,3 +12,70 @@
 .App::-webkit-scrollbar {
     display: none;
 }
+
+.group-input {
+    display: flex;
+    margin: 15px 0;
+    width: 106.3px;
+    border: 1px solid #ccc;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.group-input button {
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.input {
+    width: 40px;
+    border: none;
+    text-align: center;
+    padding-bottom: 2px;
+    outline: none;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    height: 32px;
+}
+
+.input:focus {
+    border: 1px solid #0084ff;
+}
+
+.disable {
+    padding: 4px 6px;
+}
+
+.enable {
+    padding: 4px 6px;
+}
+
+.group-button .btn {
+    border: none;
+    border-radius: 3px;
+    width: 300px;
+    height: 48px;
+    background-color: #ff3945;
+    font-size: 14px;
+    line-height: 24px;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+}
+
+.group-button .btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.iconCart::after {
+    content: '';
+    position: absolute;
+    background-color: blue;
+    width: 10px;
+    height: 14px;
+    font-size: 12px;
+    border-radius: 50%;
+    top: 0
+}

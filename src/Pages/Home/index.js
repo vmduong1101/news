@@ -1,12 +1,13 @@
 import React from "react";
-import Header from "../../Components/Header";
 import Navigation from "../../Components/Navigation";
 import Container from "../../Components/Container";
+import Cart from "../Cart";
+import { Routes, Route } from 'react-router-dom';
+
 
 const Home = () => {
     return (
         <div>
-            <Header />
             <Navigation />
             <Container />
         </div>
