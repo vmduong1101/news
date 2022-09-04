@@ -1,30 +1,31 @@
 import React from 'react'
 import Header from '../../Components/Header/index'
 import { AiTwotoneDelete } from "react-icons/ai";
-import $ from 'jquery';
+import $, { data } from 'jquery';
 import { Button } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { deleteCartThunk, editCartThunk, getcartThunk } from './cartSlice';
+import { deleteCartThunk, editCartThunk, getcartThunk, increment } from './cartSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConstructionOutlined } from '@mui/icons-material';
+import { list } from 'postcss';
 
 export default function Cart(props) {
     const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(1)
     const [value, setValue] = useState('')
     const [listCart, setListCart] = useState([])
-    const stateDeleteCart = useSelector(state => state.cart.data)
-    const dataDelete = [...stateDeleteCart]
-    console.log(dataDelete)
+    const stateDataCart = useSelector(state => state.cart)
+    // const dataDelete = [...stateDeleteCart]
+    // console.log(stateDataCart)
     // const [value2, setValue2] = useState([])
     // set
     const fetchCart = async () => {
         try {
             const actionFetchCart = await dispatch(getcartThunk())
             const listCartAction = unwrapResult(actionFetchCart)
-
+            console.log(listCartAction)
             setListCart(listCartAction)
         } catch (err) {
             console.log(err)
@@ -59,16 +60,45 @@ export default function Cart(props) {
         fetchDeleteCart()
     }
     //Code React
-    const handlePlus = (id) => {
-        const data = listCart.find((item) => item.id == id)
-        listCart.forEach((item) => setQuantity(item.quantity))
+    const handlePlus = async (id) => {
 
-        if (!data) return
+        const data = await listCart.filter((item) => item.id == id)
+
+        console.log(data)
+        if (data.length == 0) return
+
+        data.forEach((item) => {
+            return setQuantity(item.quantity)
+        })
         const payload = {
             id: id,
-            data: { ...data, quantity: quantity + 1 }
+            data: {
+                id: data[0].category,
+                img: data[0].category,
+                category: data[0].category,
+                name: data[0].name,
+                price: data[0].price,
+                quantity: quantity + 1,
+                des: {
+                    cpu: data[0].des.cpu,
+                    frontCamera: data[0].des.frontCamera,
+                    pin: data[0].des.pin,
+                    pluggin: data[0].des.pluggin,
+                    ram: data[0].des.ram,
+                    rearCamera: data[0].des.rearCamera,
+                    rom: data[0].des.rom,
+                },
+                infor: {
+                    designProduct: data[0].infor.designProduct,
+                    designProductImg: data[0].infor.designProductImg,
+                    highCamera: data[0].infor.highCamera,
+                    highCameraImg: data[0].infor.highCameraImg,
+                    performaceProduct: data[0].infor.performaceProduct,
+                    performaceProductImg: data[0].infor.performaceProductImg,
+                    primaryInfor: data[0].infor.primaryInfor,
+                },
+            }
         }
-        console.log(payload)
         const fetchEditProduct = async () => {
             try {
                 const actionEditResult = await dispatch(editCartThunk(payload))
@@ -79,31 +109,27 @@ export default function Cart(props) {
             }
         }
         fetchEditProduct()
-        setListCart(stateDeleteCart)
 
     }
-
-    const data1 = listCart.forEach((item) => setQuantity(item.quantity))
-    console.log(data1)
     const handleMinus = (id) => {
-        const data = listCart.find((item) => item.id == id)
+        // listCart.forEach((item) => setQuantity(item.quantity))
+        // const data = listCart.find((item) => item.id == id)
 
-        if (!data) return
-        const payload = {
-            id: id,
-            data: { ...data, quantity: quantity - 1 }
-        }
-        console.log(payload)
-        const fetchEditProduct = async () => {
-            try {
-                const actionEditResult = await dispatch(editCartThunk(payload))
-                const editListProduct = unwrapResult(actionEditResult)
-                fetchCart()
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        fetchEditProduct()
+        // if (!data) return
+        // const payload = {
+        //     id: id,
+        //     data: { ...data, quantity: quantity - 1 }
+        // }
+        // const fetchEditProduct = async () => {
+        //     try {
+        //         const actionEditResult = await dispatch(editCartThunk(payload))
+        //         const editListProduct = unwrapResult(actionEditResult)
+        //         fetchCart()
+        //     } catch (err) {
+        //         console.log(err)
+        //     }
+        // }
+        // fetchEditProduct()
     }
     var formatter = new Intl.NumberFormat('vi-VN',
         { style: 'currency', currency: 'VND' }
@@ -123,11 +149,11 @@ export default function Cart(props) {
             </div>
             <div>
                 <div className='mx-40 mt-14'>
-                    {dataDelete && dataDelete.map((item => (
+                    {listCart && listCart.map((item => (
                         <div className='flex py-4 justify-between items-center px-3 bg-white' key={item.id}>
                             <div className='flex w-80 items-center'>
-                                <img className='w-20 h-20' src='https://cdn.tgdd.vn/Products/Images/42/153856/TimerThumb/iphone-11-(50).jpg' />
-                                <p className='ml-3 mb-0'>Điện thoại Samsung Galaxy Z Fold 4 (12GB/256GB) - Hàng chính hãng</p>
+                                <img className='w-20 h-20' src={item.img} />
+                                <p className='ml-3 mb-0'>{item.name}</p>
                             </div>
                             <p className='mb-0 w-9'>{formatter.format(item.price)}</p>
                             <div className="group-input">

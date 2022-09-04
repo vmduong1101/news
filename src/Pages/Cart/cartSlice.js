@@ -24,8 +24,9 @@ export const deleteCartThunk = createAsyncThunk(
 
 export const editCartThunk = createAsyncThunk(
     'cart/fetchEditCart', async (payload) => {
-        console.log(payload)
         const response = await editCartApi.editCart(payload)
+        console.log(payload)
+        console.log(response)
         return response
     }
 )
@@ -41,6 +42,10 @@ const cartSlice = createSlice({
         error: ''
     },
     reducers: {
+        increment: (state, action) => {
+            const item = state.data.find(item => item.id == action.payload)
+            console.log(item)
+        }
     },
     extraReducers: {
         //Fetch

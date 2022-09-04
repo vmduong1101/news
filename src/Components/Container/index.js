@@ -46,6 +46,7 @@ const Container = () => {
     const handleAddCart = (id) => {
         fetchCart()
         const exist = productList.find((item) => item.id == id)
+        console.log(exist)
         const listExist = stateGetCart.find((item) => item.id == exist.id)
         if (listExist) {
             return toast.warning("Sản phẩm đã có trong giỏ hàng", {
@@ -62,7 +63,7 @@ const Container = () => {
 
         const fetchAddCart = async () => {
             try {
-                const actionAddCart = await dispatch(addCartThunk({ ...exist, quantity: 1, total: 0 }))
+                const actionAddCart = await dispatch(addCartThunk({ ...exist, quantity: 1 }))
                 const addListCart = unwrapResult(actionAddCart)
                 fetchCart()
 
