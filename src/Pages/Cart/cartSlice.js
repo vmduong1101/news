@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 import { addCartApi, deleteCartApi, editCartApi, getCartApi } from "../../Components/Api/cartApi";
 
 
@@ -42,10 +43,6 @@ const cartSlice = createSlice({
         error: ''
     },
     reducers: {
-        increment: (state, action) => {
-            const item = state.data.find(item => item.id == action.payload)
-            console.log(item)
-        }
     },
     extraReducers: {
         //Fetch
@@ -79,7 +76,7 @@ const cartSlice = createSlice({
         [deleteCartThunk.fulfilled]: (state, action) => {
             console.log(action)
             state.loading = false;
-            state.data = state.data.filter(item => item.id != action.payload.id)
+            state.data = state.data.filter(item => item.id !== action.payload.id)
         },
         [deleteCartThunk.rejected]: state => {
             state.loading = false;
@@ -91,7 +88,12 @@ const cartSlice = createSlice({
         },
         [editCartThunk.fulfilled]: (state, action) => {
             state.loading = false;
-            state.data = action.payload
+            const exist = state.data.find(item => item.id === action.payload.id)
+            state.data.map((item) => {
+                if (item.id === action.payload.id) {
+                    item = action.payload
+                }
+            })
         },
         [editCartThunk.rejected]: state => {
             state.loading = false;
@@ -100,6 +102,7 @@ const cartSlice = createSlice({
     }
 
 })
+export const { increment, decrement } = cartSlice.actions
+const cartReducer = cartSlice.reducer
 
-const { reducer: cartReducer } = cartSlice
 export default cartReducer;

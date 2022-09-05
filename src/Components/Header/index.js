@@ -10,7 +10,7 @@ const Header = () => {
     const navigate = useNavigate();
     const userlocal = JSON.parse(localStorage.getItem('userLocal'))
     const userGmail = JSON.parse(localStorage.getItem('userGmail'))
-    const stateDeleteCart = useSelector(state => state.cart.data)
+    const stateDataCart = useSelector(state => state.cart.data)
 
     const [user, setUser] = useState('')
     useEffect(() => {
@@ -43,7 +43,7 @@ const Header = () => {
             <div className='flex items-center relative'>
                 <Link to='/cart'>
                     <AiOutlineShoppingCart className='w-7 h-7 mx-5 cursor-pointer text-white' />
-                    <span className='absolute bg-yellow-400 rounded-full w-4 h-4 top-0 left-9 text-center text-xs text-slate-800'>0</span>
+                    <span className='absolute bg-yellow-400 rounded-full w-4 h-4 top-0 left-9 text-center text-xs text-slate-800'>{stateDataCart.length}</span>
                 </Link>
                 <div className='homeHeaderRight flex justify-between items-center'>
                     <img className='rounded-full w-8 h-8 mr-3' src='https://i.ytimg.com/vi/HP7zQ6tW0_4/maxresdefault.jpg' />

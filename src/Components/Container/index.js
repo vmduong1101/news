@@ -37,17 +37,30 @@ const Container = () => {
             }
         }
         fetchProductList()
-        fetchCart()
     }, [])
     var formatter = new Intl.NumberFormat('vi-VN',
         { style: 'currency', currency: 'VND' }
     );
 
-    const handleAddCart = (id) => {
-        fetchCart()
-        const exist = productList.find((item) => item.id == id)
-        console.log(exist)
-        const listExist = stateGetCart.find((item) => item.id == exist.id)
+    const handleAddCart = async (id) => {
+        const exist = await productList.find((item) => item.id == id)
+        if (!exist) return
+        if (stateGetCart.length == 1) {
+            return toast.warning("Vui lòng thành toán trước khi mua thêm sản phẩm", {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: 'light'
+            })
+        }
+        const listExist = await stateGetCart.find((item) => item.cartId == exist.id)
+        console.log('state Add', stateGetCart)
+        console.log('listExist', listExist)
+
         if (listExist) {
             return toast.warning("Sản phẩm đã có trong giỏ hàng", {
                 position: "bottom-right",
@@ -59,31 +72,46 @@ const Container = () => {
                 progress: undefined,
                 theme: 'light'
             })
-        }
+        } else {
+            const fetchAddCart = async () => {
+                const itemCart = {
+                    cartId: exist.id,
+                    name: exist.name,
+                    price: exist.price,
+                    img: exist.img,
+                    category: exist.brand,
+                    des: {
+                        cpu: exist.cpu,
+                        ram: exist.ram,
+                        rom: exist.rom,
+                        rearCamera: exist.rearCamera,
+                        frontCamera: exist.frontCamera,
+                        pin: exist.pin,
+                        pluggin: exist.pluggin,
+                    }
 
-        const fetchAddCart = async () => {
-            try {
-                const actionAddCart = await dispatch(addCartThunk({ ...exist, quantity: 1 }))
-                const addListCart = unwrapResult(actionAddCart)
-                fetchCart()
+                }
+                try {
+                    const actionAddCart = await dispatch(addCartThunk({ ...itemCart, quantity: 1 }))
+                    const addListCart = unwrapResult(actionAddCart)
+                    fetchCart()
 
-            } catch (err) {
-                console.log(err)
+                } catch (err) {
+                    console.log(err)
+                }
             }
+            fetchAddCart()
+            toast.success("Đã thêm sản phẩm vào giỏ hàng", {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: 'light'
+            })
         }
-        fetchAddCart()
-        toast.success("Đã thêm sản phẩm vào giỏ hàng", {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: 'light'
-        })
-        return
-
     }
     return (
         <Spin spinning={stateListProduct} tip="Loading...">
