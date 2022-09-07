@@ -79,3 +79,30 @@
     border-radius: 50%;
     top: 0
 }
+
+.detail {
+    height: 600px;
+}
+
+.detailButton {
+    width: 800px;
+    position: relative;
+}
+
+.detailButton button {
+    color: #0084ff;
+    border: 1px solid #0084ff;
+    padding: 8px 150px;
+    border-radius: 4px;
+    margin-top: -12px;
+    position: absolute;
+    right: 217px;
+}
+
+.article {
+    top: -74px;
+    background: linear-gradient(to bottom, rgba(255 255 255/0), rgba(255 255 255/62.5), rgba(255 255 255/1));
+    position: absolute;
+    height: 105px;
+    width: 100%;
+}

@@ -22,8 +22,6 @@ export const addProductThunk = createAsyncThunk(
 export const getItemProductThunk = createAsyncThunk(
     'product/fetchGetItemProduct', async (id) => {
         const response = await getItemProductApi.getItemProduct(id)
-
-        console.log('res', response)
         return response
     }
 )
@@ -31,8 +29,6 @@ export const getItemProductThunk = createAsyncThunk(
 export const editProductThunk = createAsyncThunk(
     'product/fetchEditProduct', async (payload) => {
         const response = await editProductApi.editProduct(payload)
-        console.log('payload', payload)
-        console.log('res', response)
         return response
     }
 )
@@ -83,7 +79,8 @@ const productSlice = createSlice({
         },
         [getItemProductThunk.fulfilled]: (state, action) => {
             state.loading = false;
-            state.data = action.payload
+            state.data = []
+            state.data.push(action.payload)
         },
         [getItemProductThunk.rejected]: state => {
             state.loading = false;
@@ -96,7 +93,6 @@ const productSlice = createSlice({
         [editProductThunk.fulfilled]: (state, action) => {
             state.loading = false;
             state.data = action.payload
-            console.log('action edit', action)
         },
         [editProductThunk.rejected]: state => {
             state.loading = false;

@@ -138,6 +138,12 @@ const AdminProduct = () => {
                         frontCamera: getItemProduct.des.frontCamera,
                         pin: getItemProduct.des.pin,
                         pluggin: getItemProduct.des.pluggin,
+
+                        slide1: getItemProduct.slide1,
+                        slide2: getItemProduct.slide2,
+                        slide3: getItemProduct.slide3,
+                        slide4: getItemProduct.slide4,
+                        slide5: getItemProduct.slide5,
                         //
                         primaryInfor: getItemProduct.infor.primaryInfor,
                         designProduct: getItemProduct.infor.designProduct,
@@ -237,6 +243,11 @@ const AdminProduct = () => {
             price: values.price,
             img: values.img,
             category: values.brand,
+            slide1: values.slide1,
+            slide2: values.slide2,
+            slide3: values.slide3,
+            slide4: values.slide4,
+            slide5: values.slide5,
             des: {
                 cpu: values.cpu,
                 ram: values.ram,
@@ -371,6 +382,66 @@ const AdminProduct = () => {
                                 ]}
                             >
                                 <Input placeholder='Nhập link hình ảnh của sản phẩm' />
+                            </Form.Item>
+                            <Form.Item
+                                label="Slide 1"
+                                name="slide1"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập ảnh slide1',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder='Nhập link hình ảnh slide1 của sản phẩm' />
+                            </Form.Item>
+                            <Form.Item
+                                label="Slide 2"
+                                name="slide2"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập ảnh slide2',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder='Nhập link hình ảnh slide2 của sản phẩm' />
+                            </Form.Item>
+                            <Form.Item
+                                label="Slide 3"
+                                name="slide3"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập ảnh slide3',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder='Nhập link hình ảnh slide3 của sản phẩm' />
+                            </Form.Item>
+                            <Form.Item
+                                label="Slide 4"
+                                name="slide4"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập ảnh slide4',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder='Nhập link hình ảnh slide4 của sản phẩm' />
+                            </Form.Item>
+                            <Form.Item
+                                label="Slide 5"
+                                name="slide5"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập ảnh slide5',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder='Nhập link hình ảnh slide5 của sản phẩm' />
                             </Form.Item>
                             <Form.Item
                                 label="CPU"

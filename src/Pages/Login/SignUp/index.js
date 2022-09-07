@@ -19,7 +19,7 @@ firebase.initializeApp(config);
 
 const SignUp = (props) => {
     const navigate = useNavigate()
-    const { change, setChange } = props
+    const { change, setChange, setAuthen, setUser } = props
     const [eye, setEye] = useState(false)
     const [validate, setValidate] = useState(true)
 
@@ -43,6 +43,8 @@ const SignUp = (props) => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const userlocal = JSON.parse(localStorage.getItem('userLocal'))
+    const userGmail = JSON.parse(localStorage.getItem('userGmail'))
     const handleSubmit = (e) => {
         e.preventDefault()
         const user = JSON.parse(localStorage.getItem('userLocal')) || []
@@ -58,7 +60,15 @@ const SignUp = (props) => {
                 progress: undefined,
                 theme: 'light'
             })
-            setTimeout(() => navigate('/home'), 1000)
+            setTimeout(() => {
+                if (userlocal) {
+                    setUser(userlocal.name)
+                } else if (userGmail) {
+                    setUser(userGmail)
+                }
+                setAuthen(true)
+                navigate('/')
+            }, 1000)
         } else {
             setValidate(false)
             toast.error("Đăng nhập thất bại!", {
@@ -95,7 +105,7 @@ const SignUp = (props) => {
                         <input type='text' placeholder='Số điện thoại hoặc Email' value={username} onChange={(e) => setUsername(e.target.value)} />
                         <div className={validate ? 'validatUser' : 'validatUser active'}>
                             <div className='validateContainer'>
-                                <p>Số điện thoại hoặc Email không chính xác</p>
+                                <p className='mb-0'>Số điện thoại hoặc Email không chính xác</p>
                                 <FontAwesomeIcon icon={faXmark} className='validateCancle' onClick={() => setValidate(true)}></FontAwesomeIcon>
                             </div>
                         </div>

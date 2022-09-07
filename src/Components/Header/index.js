@@ -6,13 +6,15 @@ import { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useSelector } from 'react-redux';
-const Header = () => {
+const Header = (props) => {
+    const { authen, setAuthen, user, setUser } = props
     const navigate = useNavigate();
     const userlocal = JSON.parse(localStorage.getItem('userLocal'))
     const userGmail = JSON.parse(localStorage.getItem('userGmail'))
     const stateDataCart = useSelector(state => state.cart.data)
 
-    const [user, setUser] = useState('')
+    // const [user, setUser] = useState('')
+
     useEffect(() => {
         if (userlocal) {
             setUser(userlocal.name)
@@ -23,17 +25,19 @@ const Header = () => {
     }, [])
 
     const handleSignOut = () => {
-        firebase.auth().signOut().then(function () {
-            // Sign-out successful.
-            navigate('/')
-        }).catch(function (error) {
-            // An error happened.
-            console.log(error)
-        });
+        // firebase.auth().signOut().then(function () {
+        //     // Sign-out successful.
+        //     navigate('/')
+        // }).catch(function (error) {
+        //     // An error happened.
+        //     console.log(error)
+        // });
+        setAuthen(false)
+        setUser('')
     }
     return (
         <div className='flex bg-sky-400 h-20 justify-between items-center px-24 max-w-full'>
-            <Link to="/home">
+            <Link to="/">
                 <img className='w-28 h-14' src='https://xgear.net/wp-content/uploads/2022/05/Xgear-logo.png' />
             </Link>
             <div className='flex items-center relative'>
@@ -47,8 +51,14 @@ const Header = () => {
                 </Link>
                 <div className='homeHeaderRight flex justify-between items-center'>
                     <img className='rounded-full w-8 h-8 mr-3' src='https://i.ytimg.com/vi/HP7zQ6tW0_4/maxresdefault.jpg' />
-                    <p className='text-white m-0'>{user}</p>
-                    <button className='bg-slate-200 p-1 rounded text-sm ml-3 hover:bg-violet-600 text-slate-900 px-2' onClick={handleSignOut} >Đăng xuất</button>
+                    <p className='text-white m-0 w-28'>{user}</p>
+                    {authen ?
+                        <button className='bg-slate-200 p-1 rounded text-sm ml-3 hover:bg-violet-600 text-slate-900 px-2' onClick={() => handleSignOut()} >Đăng xuất</button>
+                        :
+                        <Link to='/login'>
+                            <button className='bg-slate-200 p-1 rounded text-sm ml-3 hover:bg-violet-600 text-slate-900 px-2'>Đăng nhập</button>
+                        </Link>
+                    }
                 </div>
             </div>
         </div>
