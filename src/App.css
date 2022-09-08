@@ -106,3 +106,28 @@
     height: 105px;
     width: 100%;
 }
+
+.slick-next:before {
+    margin-left: -50px;
+    background-color: transparent;
+    color: transparent !important;
+}
+
+.slick-prev:before {
+    margin-right: -50px;
+    background-color: transparent;
+    color: transparent;
+}
+
+.slick-arrow img {
+    opacity: 0.5;
+}
+
+.slick-slider {
+    cursor: pointer;
+}
+
+.slick-slider:hover .slick-arrow img {
+    opacity: 1;
+    cursor: pointer;
+}

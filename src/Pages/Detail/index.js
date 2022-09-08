@@ -10,14 +10,21 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { ToastContainer } from 'react-toastify';
 import { data } from 'jquery';
 import { addCartThunk, getcartThunk } from '../Cart/cartSlice';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 
 const { Option } = Select;
+
 export default function Detail() {
+
     const [province, setProvince] = useState([])
     const [detail, setDetail] = useState(false)
     const stateData = useSelector(state => state.products)
-    console.log(stateData.loading)
+
+    console.log(stateData.data)
+
     let { id } = useParams();
     const dispatch = useDispatch()
 
@@ -42,6 +49,7 @@ export default function Detail() {
             console.log(err)
         }
     }
+
     useEffect(() => {
         fetchGetItemProduct()
         getProvince().then(data => {
@@ -63,23 +71,6 @@ export default function Detail() {
     }
 
     const handleAddCart = async () => {
-        // const itemCart = {
-        //     cartId: stateData.data.id,
-        //     name: stateData.data.name,
-        //     price: exist.price,
-        //     img: exist.img,
-        //     category: exist.brand,
-        //     des: {
-        //         cpu: exist.cpu,
-        //         ram: exist.ram,
-        //         rom: exist.rom,
-        //         rearCamera: exist.rearCamera,
-        //         frontCamera: exist.frontCamera,
-        //         pin: exist.pin,
-        //         pluggin: exist.pluggin,
-        //     }
-
-        // }
         try {
             const actionAddCart = await dispatch(addCartThunk(...stateData.data))
             const addListCart = unwrapResult(actionAddCart)
@@ -88,6 +79,37 @@ export default function Detail() {
             console.log(err)
         }
     }
+
+
+    //Slider
+    const ArrowLeft = ({ className, style, onClick }) => (
+        <button
+            onClick={onClick}
+            className={className}
+            style={{ ...style, display: "block", marginTop: '22px', transform: 'rotate(180deg)', marginLeft: '26px', zIndex: '1', width: '28px' }}>
+            <img src='https://salt.tikicdn.com/ts/upload/6b/59/c2/b61db5f1c32cfdc6d75e59d4fac2dbe8.png' />
+        </button>
+    );
+    const ArrowRight = ({ className, style, onClick }) => (
+        <button
+            onClick={onClick}
+            className={className}
+            style={{ ...style, display: "block", marginTop: '-37px', marginRight: '25px', zIndex: '1', width: '28px' }}>
+            <img src='https://salt.tikicdn.com/ts/upload/6b/59/c2/b61db5f1c32cfdc6d75e59d4fac2dbe8.png' />
+
+        </button>
+    );
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
+        nextArrow: <ArrowRight />,
+        prevArrow: <ArrowLeft />,
+    };
+
 
     return (
         <Spin spinning={stateData.loading} tip='Loading...'>
@@ -103,8 +125,24 @@ export default function Detail() {
                         <div className='ml-28 font-bold text-lg'>Điện thoại {item.name}</div>
                         <hr className=' my-4 mx-28' />
                         <div className='flex mx-28'>
-                            <div className='' style={{ width: '750px' }}>
-                                <img style={{ width: '710px', height: '394px' }} src={item.slide1} />
+                            <div className='slider' style={{ width: '710px', marginRight: '40px', position: 'relative' }}>
+                                <Slider  {...settings}>
+                                    <div>
+                                        <img style={{ width: '710px', height: '394px' }} src={item.slide1} />
+                                    </div>
+                                    <div>
+                                        <img style={{ width: '710px', height: '394px' }} src={item.slide2} />
+                                    </div>
+                                    <div>
+                                        <img style={{ width: '710px', height: '394px' }} src={item.slide3} />
+                                    </div>
+                                    <div>
+                                        <img style={{ width: '710px', height: '394px' }} src={item.slide4} />
+                                    </div>
+                                    <div>
+                                        <img style={{ width: '710px', height: '394px' }} src={item.slide5} />
+                                    </div>
+                                </Slider>
                             </div>
                             <div className='text-left'>
                                 <h3 className='font-bold text-xl'>Cấu hình Điện thoại {item.name} {item.des.rom}</h3>
